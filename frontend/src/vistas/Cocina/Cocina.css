@@ -1,0 +1,149 @@
+/* ============================================================
+   VISTA COCINA — Kanban board (pantalla grande)
+   ============================================================ */
+
+.cocina {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background-color: var(--fondo);
+}
+
+/* El tablero ocupa todo el espacio restante */
+.cocina__tablero {
+  flex: 1;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  overflow-x: auto;
+  min-height: 0;
+}
+
+/* ---------- Columna ---------- */
+.columna-kanban {
+  flex: 1;
+  min-width: 280px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.columna-kanban__cabecera {
+  background-color: var(--blanco);
+  border-radius: var(--radio-xl);
+  box-shadow: var(--sombra-sm);
+  padding: 0.875rem 1rem;
+  flex-shrink: 0;
+}
+
+.columna-kanban__titulo {
+  font-size: var(--texto-xl);
+  font-weight: 600;
+  color: var(--azul-marino);
+  line-height: 1.2;
+}
+
+.columna-kanban__conteo {
+  font-size: var(--texto-sm);
+  color: rgba(28, 52, 97, 0.55);
+}
+
+.columna-kanban__lista {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 2px;
+}
+
+.columna-kanban__vacio {
+  text-align: center;
+  padding: 2.5rem 0;
+  color: rgba(28, 52, 97, 0.45);
+  font-size: var(--texto-sm);
+}
+
+/* ---------- Tarjeta de pedido ---------- */
+.tarjeta-pedido {
+  background-color: var(--blanco);
+  border-radius: var(--radio-2xl);
+  padding: 1rem;
+  box-shadow: var(--sombra-sm);
+}
+
+.tarjeta-pedido--lista {
+  background-color: var(--fondo-listo);
+}
+
+.tarjeta-pedido__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.tarjeta-pedido__mesa {
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  color: var(--cafe-mesa);
+}
+
+.tarjeta-pedido__hora {
+  font-size: var(--texto-sm);
+  color: rgba(139, 69, 19, 0.55);
+}
+
+.tarjeta-pedido__platos {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.tarjeta-pedido__plato {
+  font-size: var(--texto-base);
+  color: var(--texto-secundario);
+  line-height: 1.4;
+}
+
+.tarjeta-pedido__cantidad {
+  font-weight: 700;
+  color: var(--azul-marino);
+  margin-right: 0.25rem;
+}
+
+.tarjeta-pedido__comentario {
+  font-style: italic;
+  color: var(--teal);
+  font-size: var(--texto-sm);
+}
+
+.tarjeta-pedido__tiempo {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--texto-sm);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.tarjeta-pedido__tiempo--verde  { color: var(--verde); }
+.tarjeta-pedido__tiempo--naranja { color: var(--naranja); }
+.tarjeta-pedido__tiempo--rojo   { color: var(--rojo); }
+
+.tarjeta-pedido__btn {
+  width: 100%;
+  background-color: var(--azul-marino);
+  color: var(--blanco);
+  padding: 0.75rem;
+  border-radius: var(--radio-xl);
+  font-weight: 600;
+  font-size: var(--texto-base);
+  transition: background-color var(--transicion);
+}
+
+.tarjeta-pedido__btn:hover { background-color: var(--azul-marino-oscuro); }
+.tarjeta-pedido__btn:active { transform: scale(0.98); }
