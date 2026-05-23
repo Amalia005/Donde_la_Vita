@@ -1,0 +1,265 @@
+/* ============================================================
+   VISTA ADMIN
+   ============================================================ */
+
+.admin {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--fondo-crema);
+  padding-bottom: 5rem;
+}
+
+.admin__contenido {
+  padding: 0.75rem 1rem;
+}
+
+.admin__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin__vacio {
+  text-align: center;
+  color: var(--texto-muted);
+  margin-top: 3rem;
+  font-size: var(--texto-sm);
+}
+
+/* ---------- Botón flotante agregar ---------- */
+.admin__fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 30;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radio-full);
+  background-color: var(--azul-marino);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--sombra-lg);
+  transition: background-color var(--transicion), transform var(--transicion);
+}
+
+.admin__fab:hover { background-color: var(--azul-marino-oscuro); }
+.admin__fab:active { transform: scale(0.93); }
+
+/* ---------- Tarjeta de plato ---------- */
+.tarjeta-plato {
+  background-color: var(--blanco);
+  border-radius: var(--radio-xl);
+  box-shadow: var(--sombra-sm);
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  align-items: flex-start;
+}
+
+.tarjeta-plato__imagen-cont {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #e2e2e4;
+}
+
+.tarjeta-plato__imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tarjeta-plato__contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+.tarjeta-plato__fila-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.625rem;
+}
+
+.tarjeta-plato__info { flex: 1; min-width: 0; }
+
+.tarjeta-plato__nombre {
+  font-size: var(--texto-base);
+  font-weight: 500;
+  color: var(--texto-principal);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tarjeta-plato__descripcion {
+  font-size: var(--texto-xs);
+  color: var(--texto-muted);
+  margin-top: 0.2rem;
+}
+
+.tarjeta-plato__precio {
+  font-size: var(--texto-base);
+  font-weight: 600;
+  color: var(--azul-marino);
+  flex-shrink: 0;
+}
+
+.tarjeta-plato__controles {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.625rem;
+  border-top: 1px solid var(--gris-borde);
+}
+
+.tarjeta-plato__disponibilidad {
+  font-size: var(--texto-xs);
+  color: var(--texto-muted);
+  flex: 1;
+}
+
+.tarjeta-plato__btn-icono {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radio-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--azul-marino);
+  transition: background-color var(--transicion);
+}
+
+.tarjeta-plato__btn-icono:hover { background-color: var(--fondo-input); }
+
+.tarjeta-plato__btn-icono--eliminar {
+  color: var(--texto-muted);
+}
+
+.tarjeta-plato__btn-icono--eliminar:hover {
+  background-color: #fdecea;
+  color: var(--rojo);
+}
+
+/* ---------- Modal crear/editar plato ---------- */
+.modal-editar-plato__contenedor {
+  background-color: var(--blanco);
+  border-radius: var(--radio-3xl) var(--radio-3xl) 0 0;
+  width: 100%;
+  max-height: 92dvh;
+  overflow-y: auto;
+  animation: deslizarArriba 250ms ease;
+}
+
+.modal-editar-plato__cabecera {
+  position: sticky;
+  top: 0;
+  background-color: var(--blanco);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.modal-editar-plato__titulo {
+  font-size: var(--texto-xl);
+  font-weight: 600;
+  color: var(--azul-marino);
+}
+
+.modal-editar-plato__btn-cerrar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0ece6;
+  transition: background-color var(--transicion);
+}
+
+.modal-editar-plato__form {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-editar-plato__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal-editar-plato__label {
+  font-size: var(--texto-sm);
+  font-weight: 500;
+  color: var(--texto-principal);
+}
+
+.modal-editar-plato__input,
+.modal-editar-plato__textarea,
+.modal-editar-plato__select {
+  padding: 0.75rem;
+  border-radius: var(--radio-lg);
+  border: 1.5px solid var(--gris-borde);
+  background-color: var(--blanco);
+  outline: none;
+  width: 100%;
+  font-size: var(--texto-base);
+  transition: border-color var(--transicion);
+}
+
+.modal-editar-plato__textarea { resize: none; }
+
+.modal-editar-plato__input:focus,
+.modal-editar-plato__textarea:focus,
+.modal-editar-plato__select:focus {
+  border-color: var(--azul-marino);
+}
+
+.modal-editar-plato__disponibilidad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--fondo-crema);
+  padding: 0.875rem 1rem;
+  border-radius: var(--radio-lg);
+}
+
+.modal-editar-plato__btn-guardar {
+  width: 100%;
+  background-color: var(--azul-marino);
+  color: var(--blanco);
+  padding: 1rem;
+  border-radius: var(--radio-2xl);
+  font-weight: 600;
+  transition: background-color var(--transicion);
+}
+
+.modal-editar-plato__btn-guardar:hover { background-color: var(--azul-marino-oscuro); }
+
+.modal-editar-plato__btn-eliminar {
+  width: 100%;
+  background-color: transparent;
+  color: var(--rojo);
+  padding: 0.875rem;
+  border-radius: var(--radio-2xl);
+  font-weight: 600;
+  border: 2px solid var(--rojo);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.modal-editar-plato__btn-eliminar:hover {
+  background-color: var(--rojo);
+  color: var(--blanco);
+}
