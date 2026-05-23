@@ -23,7 +23,7 @@ const esquemaPlato = new mongoose.Schema({
     type: String,
     required: [true, 'La categoría del plato es obligatoria'],
     enum: {
-      values: ['menú del día', 'plato de fondo', 'agregado', 'bebestible'],
+      values: ['Menús del día', 'Platos de fondo', 'Agregados', 'Bebestibles'],
       message: '{VALUE} no es una categoría de plato válida'
     }
   },
