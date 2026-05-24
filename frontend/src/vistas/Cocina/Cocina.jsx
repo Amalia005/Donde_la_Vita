@@ -5,14 +5,14 @@ import Cabecera from '../../componentes/Cabecera.jsx';
 import ColumnaKanban from './componentes/ColumnaKanban.jsx';
 import './Cocina.css';
 
-function Cocina() {
+function Cocina({ onCerrarSesion }) {
   const { socket } = useSocket();
   const [pedidos, setPedidos] = useState([]);
 
   const cargarPedidos = () => {
     obtenerPedidos()
       .then(datos => setPedidos(Array.isArray(datos) ? datos : []))
-      .catch(() => {});
+      .catch(() => { });
   };
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Cocina() {
     if (!socket) return;
 
     socket.on('nuevo-pedido', (pedido) => {
-      setPedidos(prev => [pedido, ...prev]);
+      setPedidos(prev => [...prev, pedido]);
     });
 
     socket.on('pedido-actualizado', (pedidoActualizado) => {
@@ -47,15 +47,17 @@ function Cocina() {
     }
   };
 
-  const pendientes    = pedidos.filter(p => p.estado === 'pendiente');
+  const pendientes = pedidos.filter(p => p.estado === 'pendiente');
   const enPreparacion = pedidos.filter(p => p.estado === 'en preparación');
-  const listos        = pedidos.filter(p => p.estado === 'listo');
+  const listos = pedidos.filter(p => p.estado === 'listo');
 
   return (
     <div className="cocina">
-      <Cabecera />
+      <div className="vista-contenido">
+        <Cabecera onCerrarSesion={onCerrarSesion} />
+      </div>
 
-      <div className="cocina__tablero">
+      <div className="cocina__tablero vista-contenido">
         <ColumnaKanban
           titulo="Pendientes"
           pedidos={pendientes}

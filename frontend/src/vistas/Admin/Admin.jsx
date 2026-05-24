@@ -8,12 +8,15 @@ import Cabecera from '../../componentes/Cabecera.jsx';
 import BarraSecciones from '../../componentes/BarraSecciones.jsx';
 import TarjetaPlato from './componentes/TarjetaPlato.jsx';
 import ModalEditarPlato from './componentes/ModalEditarPlato.jsx';
+import PanelUsuarios from './componentes/PanelUsuarios.jsx';
 import './Admin.css';
 
+const PESTAÑAS = ['Carta', 'Usuarios'];
 const CATEGORIAS = ['Menús del día', 'Platos de fondo', 'Agregados', 'Bebestibles'];
 
-function Admin() {
+function Admin({ onCerrarSesion }) {
   const { socket } = useSocket();
+  const [pestañaActiva, setPestañaActiva] = useState('Carta');
   const [platos, setPlatos] = useState([]);
   const [categoriaActiva, setCategoriaActiva] = useState(CATEGORIAS[0]);
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -22,7 +25,7 @@ function Admin() {
   useEffect(() => {
     obtenerPlatos()
       .then(datos => setPlatos(Array.isArray(datos) ? datos : []))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const abrirCrear = () => {
@@ -42,13 +45,13 @@ function Admin() {
 
   const emitirCarta = () => socket?.emit('carta-actualizada');
 
-  const handleGuardar = async (datos) => {
+  const handleGuardar = async (datos, archivo) => {
     try {
       if (platoEditando) {
-        const actualizado = await editarPlato(platoEditando._id, datos);
+        const actualizado = await editarPlato(platoEditando._id, datos, archivo);
         setPlatos(prev => prev.map(p => p._id === platoEditando._id ? actualizado : p));
       } else {
-        const nuevo = await crearPlato(datos);
+        const nuevo = await crearPlato(datos, archivo);
         setPlatos(prev => [...prev, nuevo]);
       }
       emitirCarta();
@@ -84,48 +87,67 @@ function Admin() {
 
   return (
     <div className="admin">
-      <Cabecera />
-      <BarraSecciones
-        secciones={CATEGORIAS}
-        seccionActiva={categoriaActiva}
-        onClickSeccion={setCategoriaActiva}
-        elevada
-      />
-
-      <main className="admin__contenido">
-        {platosFiltrados.length === 0 ? (
-          <p className="admin__vacio">No hay platos en esta categoría</p>
-        ) : (
-          <div className="admin__lista">
-            {platosFiltrados.map(plato => (
-              <TarjetaPlato
-                key={plato._id}
-                plato={plato}
-                onEditar={() => abrirEditar(plato)}
-                onEliminar={() => {
-                  setPlatoEditando(plato);
-                  handleEliminar();
-                }}
-                onCambiarDisponibilidad={() => handleDisponibilidad(plato)}
-              />
-            ))}
-          </div>
-        )}
-      </main>
-
-      <button className="admin__fab" onClick={abrirCrear} aria-label="Agregar plato">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-        </svg>
-      </button>
-
-      {modalAbierto && (
-        <ModalEditarPlato
-          plato={platoEditando}
-          onCerrar={cerrarModal}
-          onGuardar={handleGuardar}
-          onEliminar={handleEliminar}
+      <div className="vista-contenido">
+        <Cabecera onCerrarSesion={onCerrarSesion} />
+        <BarraSecciones
+          secciones={PESTAÑAS}
+          seccionActiva={pestañaActiva}
+          onClickSeccion={setPestañaActiva}
+          elevada
         />
+      </div>
+
+      {pestañaActiva === 'Carta' && (
+        <>
+          <div className="vista-contenido">
+            <BarraSecciones
+              secciones={CATEGORIAS}
+              seccionActiva={categoriaActiva}
+              onClickSeccion={setCategoriaActiva}
+            />
+          </div>
+          <main className="admin__contenido vista-contenido">
+            {platosFiltrados.length === 0 ? (
+              <p className="admin__vacio">No hay platos en esta categoría</p>
+            ) : (
+              <div className="admin__lista">
+                {platosFiltrados.map(plato => (
+                  <TarjetaPlato
+                    key={plato._id}
+                    plato={plato}
+                    onEditar={() => abrirEditar(plato)}
+                    onEliminar={() => {
+                      setPlatoEditando(plato);
+                      handleEliminar();
+                    }}
+                    onCambiarDisponibilidad={() => handleDisponibilidad(plato)}
+                  />
+                ))}
+              </div>
+            )}
+          </main>
+
+          <button className="admin__fab" onClick={abrirCrear} aria-label="Agregar plato">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+
+          {modalAbierto && (
+            <ModalEditarPlato
+              plato={platoEditando}
+              onCerrar={cerrarModal}
+              onGuardar={handleGuardar}
+              onEliminar={handleEliminar}
+            />
+          )}
+        </>
+      )}
+
+      {pestañaActiva === 'Usuarios' && (
+        <main className="admin__contenido vista-contenido">
+          <PanelUsuarios />
+        </main>
       )}
     </div>
   );

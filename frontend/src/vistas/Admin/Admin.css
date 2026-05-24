@@ -45,8 +45,13 @@
   transition: background-color var(--transicion), transform var(--transicion);
 }
 
-.admin__fab:hover { background-color: var(--azul-marino-oscuro); }
-.admin__fab:active { transform: scale(0.93); }
+.admin__fab:hover {
+  background-color: var(--azul-marino-oscuro);
+}
+
+.admin__fab:active {
+  transform: scale(0.93);
+}
 
 /* ---------- Tarjeta de plato ---------- */
 .tarjeta-plato {
@@ -87,7 +92,10 @@
   margin-bottom: 0.625rem;
 }
 
-.tarjeta-plato__info { flex: 1; min-width: 0; }
+.tarjeta-plato__info {
+  flex: 1;
+  min-width: 0;
+}
 
 .tarjeta-plato__nombre {
   font-size: var(--texto-base);
@@ -137,7 +145,9 @@
   transition: background-color var(--transicion);
 }
 
-.tarjeta-plato__btn-icono:hover { background-color: var(--fondo-input); }
+.tarjeta-plato__btn-icono:hover {
+  background-color: var(--fondo-input);
+}
 
 .tarjeta-plato__btn-icono--eliminar {
   color: var(--texto-muted);
@@ -219,7 +229,9 @@
   transition: border-color var(--transicion);
 }
 
-.modal-editar-plato__textarea { resize: none; }
+.modal-editar-plato__textarea {
+  resize: none;
+}
 
 .modal-editar-plato__input:focus,
 .modal-editar-plato__textarea:focus,
@@ -236,6 +248,47 @@
   border-radius: var(--radio-lg);
 }
 
+.modal-editar-plato__ayuda {
+  font-size: var(--texto-xs);
+  color: var(--texto-muted);
+  margin-top: 0.25rem;
+}
+
+.modal-editar-plato__zona-imagen {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 2px dashed var(--gris-borde);
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--fondo-input);
+  transition: border-color var(--transicion);
+}
+
+.modal-editar-plato__zona-imagen:hover {
+  border-color: var(--azul-marino);
+}
+
+.modal-editar-plato__preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-editar-plato__zona-texto {
+  font-size: var(--texto-sm);
+  color: var(--texto-muted);
+  text-align: center;
+  padding: 1rem;
+}
+
+.modal-editar-plato__input-archivo {
+  display: none;
+}
+
 .modal-editar-plato__btn-guardar {
   width: 100%;
   background-color: var(--azul-marino);
@@ -246,7 +299,9 @@
   transition: background-color var(--transicion);
 }
 
-.modal-editar-plato__btn-guardar:hover { background-color: var(--azul-marino-oscuro); }
+.modal-editar-plato__btn-guardar:hover {
+  background-color: var(--azul-marino-oscuro);
+}
 
 .modal-editar-plato__btn-eliminar {
   width: 100%;
@@ -262,4 +317,118 @@
 .modal-editar-plato__btn-eliminar:hover {
   background-color: var(--rojo);
   color: var(--blanco);
+}
+
+
+/* ---------- Panel usuarios ---------- */
+.panel-usuarios__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel-usuarios__tarjeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--blanco);
+  border-radius: var(--radio-xl);
+  box-shadow: var(--sombra-sm);
+  padding: 1rem 1.25rem;
+}
+
+.panel-usuarios__info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.panel-usuarios__nombre {
+  font-weight: 600;
+  color: var(--azul-marino);
+}
+
+.panel-usuarios__rol {
+  font-size: var(--texto-xs);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radio-full);
+  background-color: var(--fondo-input);
+  color: var(--texto-secundario);
+}
+
+.panel-usuarios__rol--admin {
+  background-color: #fde8e8;
+  color: #c53030;
+}
+
+.panel-usuarios__rol--cocina {
+  background-color: #fef3cd;
+  color: #856404;
+}
+
+.panel-usuarios__rol--garzon {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.panel-usuarios__estado {
+  font-size: var(--texto-xs);
+  color: var(--texto-muted);
+}
+
+.panel-usuarios__estado--activo {
+  color: var(--verde);
+}
+
+.panel-usuarios__acciones {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* ---------- Modal usuarios ---------- */
+.modal-usuarios__fondo {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-usuarios__contenido {
+  background-color: var(--blanco);
+  border-radius: var(--radio-2xl);
+  padding: 1.5rem;
+  width: min(90vw, 400px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-usuarios__titulo {
+  font-size: var(--texto-xl);
+  font-weight: 600;
+  color: var(--azul-marino);
+}
+
+.modal-usuarios__botones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-usuarios__btn-cancelar {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: var(--radio-xl);
+  font-weight: 600;
+  background-color: var(--fondo-input);
+  color: var(--texto-secundario);
+  transition: background-color var(--transicion);
+}
+
+.modal-usuarios__btn-cancelar:hover {
+  background-color: var(--hover-item);
 }

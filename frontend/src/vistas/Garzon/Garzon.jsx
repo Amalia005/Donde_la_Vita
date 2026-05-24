@@ -13,7 +13,7 @@ import './Garzon.css';
 
 const CATEGORIAS = ['Menús del día', 'Platos de fondo', 'Agregados', 'Bebestibles'];
 
-function Garzon() {
+function Garzon({ onCerrarSesion }) {
   const { socket } = useSocket();
   const [platos, setPlatos] = useState([]);
   const [categoriaActiva, setCategoriaActiva] = useState(CATEGORIAS[0]);
@@ -41,28 +41,13 @@ function Garzon() {
     socket.on('carta-actualizada', () => {
       obtenerPlatos({ disponible: true })
         .then(datos => setPlatos(Array.isArray(datos) ? datos : menuData))
-        .catch(() => {});
+        .catch(() => { });
     });
     return () => {
       socket.off('pedido-listo');
       socket.off('carta-actualizada');
     };
   }, [socket]);
-
-  useEffect(() => {
-    let ultimoScroll = 0;
-    const contenido = document.querySelector('.garzon__contenido');
-    if (!contenido) return;
-
-    const manejarScroll = () => {
-      const scrollY = contenido.scrollTop;
-      setCabeceraVisible(scrollY <= ultimoScroll || scrollY < 60);
-      ultimoScroll = scrollY;
-    };
-
-    contenido.addEventListener('scroll', manejarScroll, { passive: true });
-    return () => contenido.removeEventListener('scroll', manejarScroll);
-  }, []);
 
   const platosFiltrados = platos.filter(p => p.categoria === categoriaActiva);
 
@@ -118,15 +103,16 @@ function Garzon() {
 
   return (
     <div className="garzon">
-      <CabeceraMenu visible={cabeceraVisible} mesa={mesa} onMesaChange={setMesa} />
-      <BarraSecciones
-        secciones={CATEGORIAS}
-        seccionActiva={categoriaActiva}
-        onClickSeccion={setCategoriaActiva}
-        elevada={cabeceraVisible}
-      />
-
-      <main className="garzon__contenido">
+      <div className="vista-contenido">
+        <CabeceraMenu visible={cabeceraVisible} mesa={mesa} onMesaChange={setMesa} onCerrarSesion={onCerrarSesion} />
+        <BarraSecciones
+          secciones={CATEGORIAS}
+          seccionActiva={categoriaActiva}
+          onClickSeccion={setCategoriaActiva}
+          elevada
+        />
+      </div>
+      <main className="garzon__contenido vista-contenido">
         {platosFiltrados.length === 0 ? (
           <p className="garzon__vacio">No hay platos disponibles en esta categoría</p>
         ) : (

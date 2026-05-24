@@ -10,18 +10,7 @@
   background-color: var(--fondo);
 }
 
-/* ---------- Cabecera del garzón ---------- */
-.cabecera-menu {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  transition: transform var(--transicion);
-}
-
-.cabecera-menu--oculta {
-  transform: translateY(-100%);
-}
-
+/* ---------- Input de mesa en la cabecera ---------- */
 .cabecera-menu__mesa {
   display: flex;
   align-items: center;
@@ -71,10 +60,47 @@
 }
 
 /* ---------- Cuadrícula de platos ---------- */
+
 .garzon__cuadricula {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 0.75rem;
+}
+
+/* Celular grande → 2 columnas */
+@media (min-width: 480px) {
+  .garzon__cuadricula {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Computador → 3 columnas */
+@media (min-width: 768px) {
+  .garzon__cuadricula {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  /* Tarjeta horizontal: imagen a la derecha */
+  .elemento-menu {
+    flex-direction: row-reverse;
+  }
+
+  .elemento-menu__imagen-cont {
+    width: 120px;
+    min-width: 120px;
+    aspect-ratio: 1;
+    border-radius: 0 var(--radio-xl) var(--radio-xl) 0;
+  }
+
+  .elemento-menu__info {
+    flex: 1;
+    padding: 0.6rem 0.75rem 0.25rem;
+  }
+
+  .elemento-menu__precio {
+    padding: 0.25rem 0.75rem 0.5rem;
+  }
 }
 
 /* ---------- Tarjeta de plato (ElementoMenu) ---------- */
@@ -148,7 +174,9 @@
   transition: background-color var(--transicion), transform var(--transicion);
 }
 
-.boton-carrito:active { transform: scale(0.93); }
+.boton-carrito:active {
+  transform: scale(0.93);
+}
 
 .boton-carrito__icono {
   width: 24px;
@@ -199,7 +227,9 @@
   transition: background-color var(--transicion);
 }
 
-.modal-plato__btn-cerrar:hover { background-color: #e5ddd4; }
+.modal-plato__btn-cerrar:hover {
+  background-color: #e5ddd4;
+}
 
 .modal-plato__cuerpo {
   padding: 0 1.25rem 2rem;
@@ -286,7 +316,9 @@
   transition: background-color var(--transicion);
 }
 
-.modal-plato__cantidad-btn:hover { background-color: var(--hover-item); }
+.modal-plato__cantidad-btn:hover {
+  background-color: var(--hover-item);
+}
 
 .modal-plato__cantidad-numero {
   font-size: var(--texto-xl);
@@ -306,8 +338,13 @@
   transition: background-color var(--transicion);
 }
 
-.modal-plato__btn-agregar:hover { background-color: var(--azul-marino-oscuro); }
-.modal-plato__btn-agregar:active { transform: scale(0.98); }
+.modal-plato__btn-agregar:hover {
+  background-color: var(--azul-marino-oscuro);
+}
+
+.modal-plato__btn-agregar:active {
+  transform: scale(0.98);
+}
 
 /* ---------- Panel pedido ---------- */
 .panel-pedido__contenedor {
@@ -346,7 +383,9 @@
   transition: background-color var(--transicion);
 }
 
-.panel-pedido__btn-cerrar:hover { background-color: var(--hover-item); }
+.panel-pedido__btn-cerrar:hover {
+  background-color: var(--hover-item);
+}
 
 .panel-pedido__lista {
   flex: 1;
@@ -370,7 +409,9 @@
   border-bottom: 1px solid var(--gris-borde);
 }
 
-.panel-pedido__item:last-child { border-bottom: none; }
+.panel-pedido__item:last-child {
+  border-bottom: none;
+}
 
 .panel-pedido__item-nombre {
   font-weight: 500;
@@ -384,7 +425,9 @@
   color: var(--texto-muted);
 }
 
-.panel-pedido__item-nota { font-style: italic; }
+.panel-pedido__item-nota {
+  font-style: italic;
+}
 
 .panel-pedido__item-acciones {
   display: flex;
@@ -415,7 +458,9 @@
   transition: background-color var(--transicion);
 }
 
-.panel-pedido__item-btn:hover { background-color: var(--fondo-input); }
+.panel-pedido__item-btn:hover {
+  background-color: var(--fondo-input);
+}
 
 .panel-pedido__pie {
   padding: 1rem 1.25rem 1.5rem;
@@ -446,7 +491,9 @@
   outline: none;
 }
 
-.panel-pedido__mesa-input:focus { border-color: var(--azul-marino); }
+.panel-pedido__mesa-input:focus {
+  border-color: var(--azul-marino);
+}
 
 .panel-pedido__total-fila {
   display: flex;
@@ -476,8 +523,14 @@
   transition: background-color var(--transicion);
 }
 
-.panel-pedido__btn-enviar:hover:not(:disabled) { background-color: var(--azul-marino-oscuro); }
-.panel-pedido__btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
+.panel-pedido__btn-enviar:hover:not(:disabled) {
+  background-color: var(--azul-marino-oscuro);
+}
+
+.panel-pedido__btn-enviar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 /* ---------- Modal nota ---------- */
 .modal-nota__contenedor {
@@ -529,7 +582,9 @@
   font-size: var(--texto-sm);
 }
 
-.modal-nota__textarea:focus { border-color: var(--azul-marino); }
+.modal-nota__textarea:focus {
+  border-color: var(--azul-marino);
+}
 
 .modal-nota__contador {
   font-size: var(--texto-xs);
@@ -548,7 +603,9 @@
   transition: background-color var(--transicion);
 }
 
-.modal-nota__btn-guardar:hover { background-color: var(--azul-marino-oscuro); }
+.modal-nota__btn-guardar:hover {
+  background-color: var(--azul-marino-oscuro);
+}
 
 /* ---------- Notificación pedido listo ---------- */
 .garzon__notificacion {

@@ -172,9 +172,9 @@ const platosIniciales = [
 ];
 
 const usuariosIniciales = [
-  { nombre: 'Benjamín', rol: 'garzon', activo: true },
-  { nombre: 'Ricardo', rol: 'cocina', activo: true },
-  { nombre: 'Vitalia', rol: 'admin', activo: true }
+  { nombre: 'Benjamín', rol: 'garzon', activo: true, contrasena: '123' },
+  { nombre: 'Ricardo', rol: 'cocina', activo: true, contrasena: '123' },
+  { nombre: 'Vitalia', rol: 'admin', activo: true, contrasena: '123' }
 ];
 
 const sembrarDatos = async () => {

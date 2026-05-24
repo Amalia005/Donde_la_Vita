@@ -28,11 +28,22 @@ export const obtenerPlatos = (filtros = {}) => {
 export const obtenerPlatoPorId = (id) =>
   fetch(`${BASE}/platos/${id}`).then(r => r.json());
 
-export const crearPlato = (datos) =>
-  jsonPost(`${BASE}/platos`, datos);
+const construirFormData = (datos, archivo) => {
+  const fd = new FormData();
+  Object.entries(datos).forEach(([k, v]) => {
+    if (v == null) return;
+    if (Array.isArray(v)) fd.append(k, JSON.stringify(v));
+    else fd.append(k, v);
+  });
+  if (archivo) fd.append('imagen', archivo);
+  return fd;
+};
 
-export const editarPlato = (id, datos) =>
-  jsonPut(`${BASE}/platos/${id}`, datos);
+export const crearPlato = (datos, archivo) =>
+  fetch(`${BASE}/platos`, { method: 'POST', body: construirFormData(datos, archivo) }).then(r => r.json());
+
+export const editarPlato = (id, datos, archivo) =>
+  fetch(`${BASE}/platos/${id}`, { method: 'PUT', body: construirFormData(datos, archivo) }).then(r => r.json());
 
 export const cambiarDisponibilidadPlato = (id) =>
   fetch(`${BASE}/platos/${id}/disponibilidad`, { method: 'PATCH' }).then(r => r.json());
@@ -74,3 +85,13 @@ export const editarUsuario = (id, datos) =>
 
 export const eliminarUsuario = (id) =>
   fetch(`${BASE}/usuarios/${id}`, { method: 'DELETE' }).then(r => r.json());
+
+export const loginUsuario = (nombre, contrasena) =>
+  fetch(`${BASE}/usuarios/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre, contrasena }),
+  }).then(r => {
+    if (!r.ok) throw new Error('Credenciales inválidas');
+    return r.json();
+  });

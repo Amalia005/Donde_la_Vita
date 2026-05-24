@@ -1,7 +1,7 @@
 import React from 'react';
 import Cabecera from '../../../componentes/Cabecera.jsx';
 
-function CabeceraMenu({ visible, mesa, onMesaChange }) {
+function CabeceraMenu({ visible, mesa, onMesaChange, onCerrarSesion }) {
   const inputMesa = (
     <div className="cabecera-menu__mesa">
       <label htmlFor="numero-mesa" className="cabecera-menu__mesa-etiqueta">Mesa</label>
@@ -20,7 +20,7 @@ function CabeceraMenu({ visible, mesa, onMesaChange }) {
 
   return (
     <div className={`cabecera-menu${visible ? '' : ' cabecera-menu--oculta'}`}>
-      <Cabecera derecha={inputMesa} />
+      <Cabecera derecha={inputMesa} onCerrarSesion={onCerrarSesion} />
     </div>
   );
 }

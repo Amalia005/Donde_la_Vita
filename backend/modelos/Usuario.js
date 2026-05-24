@@ -18,6 +18,11 @@ const esquemaUsuario = new mongoose.Schema({
   activo: {
     type: Boolean,
     default: true
+  },
+  contrasena: {
+    type: String,
+    required: [true, 'La contraseña es obligatoria'],
+    trim: true
   }
 });
 
