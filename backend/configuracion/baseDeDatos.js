@@ -1,4 +1,4 @@
-// baseDeDatos.js - Configuración y conexión de MongoDB
+//Configuración y conexión de MongoDB
 const mongoose = require('mongoose');
 
 const conectarDB = async () => {

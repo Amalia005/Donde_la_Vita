@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import ModalBase from '../../../componentes/ModalBase.jsx';
 
 const CATEGORIAS = [
-  { valor: 'Menús del día',   etiqueta: 'Menú del día' },
+  { valor: 'Menús del día', etiqueta: 'Menú del día' },
   { valor: 'Platos de fondo', etiqueta: 'Platos de fondo' },
-  { valor: 'Agregados',       etiqueta: 'Agregados' },
-  { valor: 'Bebestibles',     etiqueta: 'Bebestibles' },
+  { valor: 'Agregados', etiqueta: 'Agregados' },
+  { valor: 'Bebestibles', etiqueta: 'Bebestibles' },
 ];
 
 const VACÍO = {
@@ -14,18 +14,34 @@ const VACÍO = {
   precio: 0,
   categoria: 'Menús del día',
   imagen: '',
+  ingredientes: [],
   disponible: true,
 };
 
 function ModalEditarPlato({ plato, onCerrar, onGuardar, onEliminar }) {
   const [form, setForm] = useState(plato ?? VACÍO);
+  const [archivo, setArchivo] = useState(null);
   const esEdicion = Boolean(plato);
+
+  const urlPreview = archivo
+    ? URL.createObjectURL(archivo)
+    : form.imagen
+      ? (form.imagen.startsWith('/') ? `http://localhost:3001${form.imagen}` : form.imagen)
+      : null;
 
   const set = (campo, valor) => setForm(prev => ({ ...prev, [campo]: valor }));
 
   const handleGuardar = (e) => {
     e.preventDefault();
-    onGuardar(form);
+    const datosFinales = { ...form };
+    if (datosFinales.ingredientesTexto != null) {
+      datosFinales.ingredientes = datosFinales.ingredientesTexto
+        .split(',')
+        .map(i => i.trim())
+        .filter(i => i);
+      delete datosFinales.ingredientesTexto;
+    }
+    onGuardar(datosFinales, archivo);
   };
 
   const handleEliminar = () => {
@@ -71,6 +87,18 @@ function ModalEditarPlato({ plato, onCerrar, onGuardar, onEliminar }) {
           </div>
 
           <div className="modal-editar-plato__campo">
+            <label className="modal-editar-plato__label">Ingredientes</label>
+            <input
+              className="modal-editar-plato__input"
+              type="text"
+              value={form.ingredientesTexto ?? (form.ingredientes || []).join(', ')}
+              onChange={e => set('ingredientesTexto', e.target.value)}
+              placeholder="Ej: Porotos, Rienda, Huevo"
+            />
+            <span className="modal-editar-plato__ayuda">Separa cada ingrediente con una coma</span>
+          </div>
+
+          <div className="modal-editar-plato__campo">
             <label className="modal-editar-plato__label">Categoría</label>
             <select
               className="modal-editar-plato__select"
@@ -88,8 +116,8 @@ function ModalEditarPlato({ plato, onCerrar, onGuardar, onEliminar }) {
             <input
               className="modal-editar-plato__input"
               type="number"
-              value={form.precio}
-              onChange={e => set('precio', Number(e.target.value))}
+              value={form.precio === 0 ? '' : form.precio}
+              onChange={e => set('precio', e.target.value === '' ? 0 : Number(e.target.value))}
               min="0"
               placeholder="0"
               required
@@ -97,13 +125,20 @@ function ModalEditarPlato({ plato, onCerrar, onGuardar, onEliminar }) {
           </div>
 
           <div className="modal-editar-plato__campo">
-            <label className="modal-editar-plato__label">URL de imagen</label>
+            <label className="modal-editar-plato__label">Imagen</label>
+            <label className="modal-editar-plato__zona-imagen" htmlFor="input-imagen-plato">
+              {urlPreview ? (
+                <img src={urlPreview} alt="preview" className="modal-editar-plato__preview" />
+              ) : (
+                <span className="modal-editar-plato__zona-texto">Toca para seleccionar imagen</span>
+              )}
+            </label>
             <input
-              className="modal-editar-plato__input"
-              type="text"
-              value={form.imagen}
-              onChange={e => set('imagen', e.target.value)}
-              placeholder="https://..."
+              id="input-imagen-plato"
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/webp"
+              className="modal-editar-plato__input-archivo"
+              onChange={e => setArchivo(e.target.files[0] || null)}
             />
           </div>
 

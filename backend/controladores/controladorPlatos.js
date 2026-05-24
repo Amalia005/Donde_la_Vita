@@ -29,7 +29,7 @@ const obtenerPlatos = async (req, res) => {
     if (req.query.categoria) filtro.categoria = req.query.categoria;
     if (req.query.disponible !== undefined) filtro.disponible = req.query.disponible === 'true';
 
-    const platos = await Plato.find(filtro);
+    const platos = await Plato.find(filtro).sort({ _id: -1 });
     res.json(platos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener los platos', error: error.message });
@@ -46,9 +46,17 @@ const obtenerPlatoPorId = async (req, res) => {
   }
 };
 
+const parsearCampos = (body) => {
+  const datos = { ...body };
+  if (typeof datos.ingredientes === 'string') {
+    try { datos.ingredientes = JSON.parse(datos.ingredientes); } catch { datos.ingredientes = []; }
+  }
+  return datos;
+};
+
 const crearPlato = async (req, res) => {
   try {
-    const datosPlato = { ...req.body };
+    const datosPlato = parsearCampos(req.body);
     if (req.file) datosPlato.imagen = `/uploads/${req.file.filename}`;
 
     const nuevoPlato = await Plato.create(datosPlato);
@@ -60,7 +68,7 @@ const crearPlato = async (req, res) => {
 
 const editarPlato = async (req, res) => {
   try {
-    const datosActualizados = { ...req.body };
+    const datosActualizados = parsearCampos(req.body);
     if (req.file) datosActualizados.imagen = `/uploads/${req.file.filename}`;
 
     const plato = await Plato.findByIdAndUpdate(req.params.id, datosActualizados, { new: true, runValidators: true });

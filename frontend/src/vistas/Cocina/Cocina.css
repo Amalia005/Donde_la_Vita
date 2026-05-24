@@ -17,6 +17,7 @@
   padding: 0.75rem;
   overflow-x: auto;
   min-height: 0;
+
 }
 
 /* ---------- Columna ---------- */
@@ -130,9 +131,17 @@
   margin-bottom: 0.75rem;
 }
 
-.tarjeta-pedido__tiempo--verde  { color: var(--verde); }
-.tarjeta-pedido__tiempo--naranja { color: var(--naranja); }
-.tarjeta-pedido__tiempo--rojo   { color: var(--rojo); }
+.tarjeta-pedido__tiempo--verde {
+  color: var(--verde);
+}
+
+.tarjeta-pedido__tiempo--naranja {
+  color: var(--naranja);
+}
+
+.tarjeta-pedido__tiempo--rojo {
+  color: var(--rojo);
+}
 
 .tarjeta-pedido__btn {
   width: 100%;
@@ -145,5 +154,10 @@
   transition: background-color var(--transicion);
 }
 
-.tarjeta-pedido__btn:hover { background-color: var(--azul-marino-oscuro); }
-.tarjeta-pedido__btn:active { transform: scale(0.98); }
+.tarjeta-pedido__btn:hover {
+  background-color: var(--azul-marino-oscuro);
+}
+
+.tarjeta-pedido__btn:active {
+  transform: scale(0.98);
+}
